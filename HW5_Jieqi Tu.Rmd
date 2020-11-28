@@ -1,0 +1,13 @@
+---
+title: "Homework 5"
+author: "Jieqi Tu (jt3098)"
+date: "11/28/2020"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+## Question 1
