@@ -123,3 +123,5 @@ int_Riemann(posterior.function.u, 1e-10, 1/3)
 ```
 
 From (c) and (d), we know that, both results are very close to 0.99086. However, the transformation in (c) is more close.
+
+## Question 2
