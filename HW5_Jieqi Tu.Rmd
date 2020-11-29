@@ -166,12 +166,43 @@ EY(a = exp(2), m = 6)
 EY(a = exp(9), m = 6)
 ```
 
-From the result, we could see that, when a is a small value, this method works fine. However, when we increase the value of a, the result is much more deviated from the theoretical value.
+From the result, we could see that, when a is a small value, this method works fine. However, when we increase the value of a, the results are much more deviated from the theoretical values.
 
 ## Question 3
 
 #### (a)
-```{r}
+Plot the weights versus the nodes.
+```{r q3 a}
+# 10-point Gaussian quadrature rule
+nodes = c(-0.148874338981631, 0.148874338981631, -0.433395394129247, 0.433395394129247, 
+          -0.679409568299024, 0.679409568299024, -0.865063366688985, 0.865063366688985, 
+          -0.973906528517172, 0.973906528517172)
+weights = c(0.295524224714753, 0.295524224714753, 0.269266719309996, 0.269266719309996, 
+            0.219086362515982, 0.219086362515982, 0.149451394150581, 0.149451394150581, 
+            0.066671344308688, 0.066671344308688)
 
+# plot the weights versus nodes
+data3 = data.frame(nodes, weights)
+data3 %>% 
+  ggplot(aes(x = nodes, y = weights)) + geom_point(alpha = 0.4) +
+  theme_bw()
 ```
 
+#### (b)
+```{r q3 b}
+# Define the function for area
+area = function(nodes, weights, f, lower, upper) {
+  return(list(theoretical = integrate(f, lower, upper),
+              gaussian.quadrature.num = length(nodes),
+              gaussian.area = sum(weights*f(nodes))))
+}
+
+# Define the function of y = x^2
+f = function(x) {x^2}
+
+area(nodes, weights, f, lower = -1, upper = 1)
+```
+
+From the result, we could see that, the result of 10-point Gaussian quadrature method is identical to the theoretical value.
+
+## Question 4
