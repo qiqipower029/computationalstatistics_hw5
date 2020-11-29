@@ -11,3 +11,21 @@ library(tidyverse)
 ```
 
 ## Question 1
+The Bayesian model would be $\bar x|\mu \sim N(\mu, \frac{3^2}{7})$ and here our prior is $\mu \sim Cauchy(5,2)$.
+```{r q1}
+# Import data
+x = c(6.52, 8.32, 0.31, 2.82, 9.96, 0.14, 9.64)
+xbar = mean(x)
+
+# Construct Bayesian Model
+likelihood.function = function(mu) {
+  1/sqrt(2*pi*9/7) * exp(-(xbar - mu)^2/(2*9/7))
+}
+
+prior.function = function(mu) {
+  1/(pi*2*(1 + ((mu - 5)/2)^2))
+}
+```
+
+Then we need to find the normalizating constant k. Here we need to perform a variable transformation.
+Let $\mu=log(\frac{y}{1-y})$, since $-\infty<\mu<\infty$, we will get $0<y<1$.
