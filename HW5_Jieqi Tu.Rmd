@@ -3,6 +3,8 @@ title: "Homework 5"
 author: "Jieqi Tu (jt3098)"
 date: "11/28/2020"
 output: pdf_document
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}
