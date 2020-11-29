@@ -125,3 +125,53 @@ int_Riemann(posterior.function.u, 1e-10, 1/3)
 From (c) and (d), we know that, both results are very close to 0.99086. However, the transformation in (c) is more close.
 
 ## Question 2
+```{r q2}
+# define the function for Romberg's algorithm
+int_Romberg = function(f, a, b, m) {
+  R = matrix(NA, m, m)
+  h = b - a
+  R[1,1] = (f(a) + f(b)) * h/2
+  for (i in 2:m) { 
+    R[i,1] = 1/2 * (R[i-1,1] + h * sum(f(a + (1:2^(i-2) - 0.5) * h)))
+    for (j in 2:i) { 
+      R[i,j] = R[i,j-1] + (R[i,j-1] - R[i-1,j-1]) / (4^(j-1) - 1)
+    } 
+    h = h/2
+  }
+  result = R[m,m]
+  
+  return(list(R, result))
+}
+
+EY = function(a, m) {
+  Romberg = int_Romberg(function(x) 1/x, 1, a, m)
+  
+  # simulated solution (MC integration)
+  set.seed(1029)
+  x = runif(n=10000, min = 1, max = a)
+  y = (a-1)/x
+  MC_integration = mean(y)
+  
+  # theoretical result
+  theoretical = log(a)
+  
+  return(list(Romberg.array = Romberg[[1]],
+              Romberg.solution = Romberg[[2]],
+              MC.integration = MC_integration,
+              theoretical = theoretical))
+}
+
+EY(a = exp(1), m = 6)
+EY(a = exp(2), m = 6)
+EY(a = exp(9), m = 6)
+```
+
+From the result, we could see that, when a is a small value, this method works fine. However, when we increase the value of a, the result is much more deviated from the theoretical value.
+
+## Question 3
+
+#### (a)
+```{r}
+
+```
+
