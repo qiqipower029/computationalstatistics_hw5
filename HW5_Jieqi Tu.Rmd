@@ -281,3 +281,25 @@ data.frame(points=c(1,2,3,4,5),
 ```
 
 #### (e)
+![image3](WechatIMG4.jpeg)
+We will use these formula to estimate the variance.
+```{r q4 e}
+constant.function = function(x) {
+  1/(1 + ((sqrt(5)*x - 3)/8)^2)
+}
+weights = fun_qw(nodes)/sum(fun_qw(nodes))
+# Calculate c
+c = 1/sqrt(128*pi^3)*sum(weights*constant.function(nodes))
+
+mu.function = function(x){
+  (sqrt(5)*x + 47)/(1 + ((sqrt(5)*x - 3)/8)^2)
+}
+mu2.function = function(x) {
+  (sqrt(5)*x + 47)^2/(1 + ((sqrt(5)*x - 3)/8)^2)
+}
+mu.expectation = (1/c) * (1/sqrt(128*pi^3)) * sum(weights * mu.function(nodes))
+mu2.expectation = (1/c) * (1/sqrt(128*pi^3)) * sum(weights * mu2.function(nodes))
+var_mu = mu2.expectation - (mu.expectation)^2
+var_mu
+```
+
