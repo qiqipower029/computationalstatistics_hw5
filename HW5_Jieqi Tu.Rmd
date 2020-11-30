@@ -208,7 +208,14 @@ From the result, we could see that, the result of 10-point Gaussian quadrature m
 ## Question 4
 
 #### (a)
+![image1](WechatIMG2.jpeg)
+Since we assume $P_0(x)=1$, here $c=1$. However, it could be other values. But H5(x) is indeed rely on this.
+
 #### (b)
+
+![image2](WechatIMG3.jpeg)
+Here we used the probability density function of Gamma distribution to calculate the integration.
+
 #### (c)
 Estimate the nodes of the five-point Gauss-Hermite quadrature rule.
 ```{r q4 c}
@@ -252,4 +259,25 @@ data.frame(point=c(1,2,3,4,5),
 ```
 
 #### (d)
+Find the quadrature weights. Plot the weights versus the nodes.
+```{r q4 d}
+# set the nodes
+nodes=c(bisection.function(f=H5, a=-3, b=-2), 
+        bisection.function(f=H5, a=-2, b=-1),
+        bisection.function(f=H5, a=-1, b=1), 
+        bisection.function(f=H5, a=1, b=2), 
+        bisection.function(f=H5, a=2, b=3))
+
+fun_qw = function(x) {
+  c5 = 1/sqrt(120*sqrt(2*pi))
+  c6 = 1/sqrt(720*sqrt(2*pi))
+  qw = - c6 / (c5 * c6 * (x^6 - 15*x^4 + 45*x^2 - 15) * c5 * (5*x^4 - 30*x^2 + 15)) 
+  return(qw)
+}
+
+data.frame(points=c(1,2,3,4,5),
+           nodes=nodes, 
+           weights=fun_qw(nodes)/sum(fun_qw(nodes)))
+```
+
 #### (e)
