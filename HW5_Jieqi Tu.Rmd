@@ -206,3 +206,50 @@ area(nodes, weights, f, lower = -1, upper = 1)
 From the result, we could see that, the result of 10-point Gaussian quadrature method is identical to the theoretical value.
 
 ## Question 4
+
+#### (a)
+#### (b)
+#### (c)
+Estimate the nodes of the five-point Gauss-Hermite quadrature rule.
+```{r q4 c}
+# Use Bisection method
+# Define the function for bisection method
+bisection.function = function(f, a, b, n = 1000, tol = 1e-6) {
+  if(f(a)*f(b)>0) {
+    stop('Choose f(a) and f(b) that have different signs')
+  }
+  
+  for (i in 1:n) {
+    c = (a+b)/2
+    if(f(c) == 0 | ((b-a)/2)<tol) {return(c)}
+    if(sign(f(c)) == sign(f(a))) {a = c}
+    else {b = c}
+  }
+}
+
+# plot H5(x) from -3 to 3
+# define H5(x)
+H5 = function(x) {
+  (1/sqrt(120*sqrt(2*pi))) * (x^5 - 10*x^3 + 15*x)
+}
+x = seq(-3, 3, length = 100)
+plot(x = x, y = H5(x), type = 'l')
+abline(h = 0, lty = 2)
+points(x = bisection.function(f=H5, a=-3, b=-2), y = 0, pch = 16, col = 'red') 
+points(x = bisection.function(f=H5, a=-2, b=-1), y = 0, pch = 16, col = 'red') 
+points(x = bisection.function(f=H5, a=-1, b=1), y = 0, pch = 16, col = 'red') 
+points(x = bisection.function(f=H5, a=1, b=2), y = 0, pch = 16, col = 'red')
+points(x = bisection.function(f=H5, a=2, b=3), y = 0, pch = 16, col = 'red')
+
+# Find the root using bisection method
+data.frame(point=c(1,2,3,4,5),
+           root=c(bisection.function(f=H5, a=-3, b=-2), 
+                  bisection.function(f=H5, a=-2, b=-1),
+                  bisection.function(f=H5, a=-1, b=1), 
+                  bisection.function(f=H5, a=1, b=2), 
+                  bisection.function(f=H5, a=2, b=3)))
+
+```
+
+#### (d)
+#### (e)
